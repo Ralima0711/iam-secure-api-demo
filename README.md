@@ -1,242 +1,66 @@
-# 🔐 IAM Secure API
-Clean Architecture + JWT + RBAC + Docker
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Projeto de autenticação e autorização desenvolvido com foco em **Arquitetura Limpa, Segurança Corporativa e Boas Práticas de Engenharia de Software**.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-Este projeto simula a base arquitetural de um sistema **IAM (Identity and Access Management)** corporativo.
+## About Laravel
 
----
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-# 🚀 Stack Tecnológica
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-- PHP 8.2
-- Laravel 10+
-- JWT (stateless authentication)
-- MySQL 8
-- Docker + Docker Compose
-- Nginx
-- Clean Architecture
-- RBAC (Role-Based Access Control)
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
----
+## Learning Laravel
 
-# 🧱 Arquitetura
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-O projeto segue os princípios da **Clean Architecture**, promovendo separação clara entre domínio, aplicação e infraestrutura.
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-## 📂 Estrutura de Camadas
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-app/
-├── Domain/               → Entidades e contratos (interfaces)
-├── Application/          → Casos de uso (regras de negócio)
-├── Infrastructure/       → Implementações concretas (JWT, DB, Cache)
-├── Interfaces/           → Camada HTTP (Controllers, Requests, Middleware)
+## Laravel Sponsors
 
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-## 🎯 Princípios Aplicados
+### Premium Partners
 
-- SRP (Single Responsibility Principle)
-- DIP (Dependency Inversion Principle)
-- Separação entre regra de negócio e framework
-- Domain não depende de Laravel
-- Application depende apenas de abstrações
-- Infraestrutura pode ser substituída sem impacto no domínio
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
 
----
+## Contributing
 
-# 🧠 Decisões Arquiteturais
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Por que Clean Architecture?
+## Code of Conduct
 
-- Isola regra de negócio do framework
-- Permite troca de infraestrutura (ex: JWT → OAuth2)
-- Facilita testes automatizados
-- Evita acoplamento excessivo ao Laravel
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Por que JWT?
+## Security Vulnerabilities
 
-- Stateless
-- Escalável horizontalmente
-- Ideal para microsserviços
-- Não depende de sessão no servidor
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## Por que RBAC?
+## License
 
-- Modelo amplamente utilizado em ambientes corporativos
-- Permite granularidade por permissão
-- Base para futura implementação multi-tenant
-
----
-
-# 🔐 Segurança Implementada
-
-## 🔑 Autenticação
-- JWT Token
-- Refresh Token
-- Logout com invalidação
-
-## 🛂 Autorização
-- RBAC completo
-- Middleware customizado:
-  - `role`
-  - `permission`
-
-## 🛡 Proteções Aplicadas
-
-- Proteção contra User Enumeration
-- Controle de tentativas de login (Anti Brute Force por IP)
-- Auditoria persistente de eventos:
-  - login_success
-  - login_failed
-  - login_blocked
-- Rate limiting
-- Validação via FormRequest
-
----
-
-# 🧠 Fluxo de Login
-
-1. Validação via FormRequest
-2. Verificação de bloqueio por IP
-3. Busca usuário via repositório
-4. Autenticação via AuthService (abstraído)
-5. Registro de auditoria
-6. Reset de tentativas após sucesso
-
----
-
-# 📡 Endpoints Principais
-
-## 🔐 Login
-
-```http
-POST /api/auth/login
-```http
-
-## 👤 Usuário autenticado
-
-GET /api/auth/me
-
-
-## 🔄 Refresh Token
-
-POST /api/auth/refresh
-
-
-## 🔒 Acesso restrito a ADMIN
-
-GET /api/admin-only
-
-
-## 🔑 Acesso por permissão específica
-
-GET /api/users/create-area
-
-
----
-
-# 📊 Auditoria
-
-Eventos críticos são persistidos na tabela:
-
-
-audit_logs
-
-
-Campos registrados:
-
-- user_id
-- event
-- ip
-- user_agent
-- metadata
-- created_at
-
-Essa estrutura permite futura integração com SIEM ou monitoramento centralizado.
-
----
-
-# 🛡 Proteção contra Brute Force
-
-- Máximo de 5 tentativas por IP
-- Bloqueio temporário
-- Registro de evento `login_blocked`
-- Reset automático após login válido
-
----
-
-# 🏗 Diagrama de Camadas
-
-
-```text
-HTTP (Controllers)
-        ↓
-Application (UseCases)
-        ↓
-Domain (Contracts / Entities)
-        ↓
-Infrastructure (JWT, DB, Cache)
-```
-
-
----
-
-# 🐳 Ambiente Dockerizado
-
-O projeto é totalmente containerizado.
-
-## Containers
-
-- PHP-FPM
-- Nginx
-- MySQL 8
-
-## Subir ambiente
-
-```bash
-docker compose up -d --build
-```
-
-## Rodar migrations
-
-```bash
-docker exec -it iam_app php artisan migrate
-```
-
-## Acessar aplicação
-
-http://localhost:8000
-
-##🌎 Considerações para Produção
-
-Em ambiente real recomenda-se:
-Redis para cache distribuído
-HTTPS obrigatório
-Rotação de chaves JWT
-Logs enviados para SIEM
-Monitoramento com Prometheus
-CI/CD automatizado
-Healthcheck endpoint
-Estratégia de backup do banco
-Secrets gerenciados via Vault ou similar
-
-##📈 Evoluções Futuras
-Swagger / OpenAPI
-Testes automatizados
-Multi-tenant IAM
-Integração com OAuth2
-Integração com SSO
-Event-driven audit logging
-Rate limit avançado por usuário
-
-🎯 Objetivo Arquitetural
-Este projeto demonstra:
-Aplicação prática de Clean Architecture
-Separação clara de responsabilidades
-Segurança aplicada em nível corporativo
-Infraestrutura containerizada
-Base escalável para sistema IAM real
-
-👩‍💻 Autora
-Roberta Alves
-Full Stack Developer
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

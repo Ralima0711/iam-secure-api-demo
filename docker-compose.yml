@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iam_app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - mysql
+    networks:
+      - iam_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: iam_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - iam_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: iam_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: iam_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: iam_user
+      MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"
+    networks:
+      - iam_network
+
+networks:
+  iam_network:
