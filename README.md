@@ -1,104 +1,141 @@
-# 🔐 IAM Secure API - Arquitetura Segura com Laravel
-
-Projeto arquitetural demonstrativo voltado à implementação segura de APIs com foco em IAM **Identity and Access Management (IAM)**, utilizando Laravel 10 e boas práticas de arquitetura.
-
-Este projeto foi desenvolvido com foco em:
-- 🔐 Autenticação segura com JWT
-- 👥 Controle de acesso baseado em papéis (RBAC)
-- ♻️ Refresh Token
-- 🔒 Hash seguro de senhas
-- 🧱 Clean Architecture
-- 📐 Princípios SOLID
-- 🐳 Ambiente Dockerizado
-- 📊 Boas práticas de segurança em APIs REST
+# 🔐 IAM Secure API — Clean Architecture + JWT + RBAC
+Projeto de autenticação e autorização desenvolvido com foco em **Arquitetura Limpa, Segurança e Boas Práticas Corporativas**.
+Este projeto simula a base de um sistema IAM (Identity and Access Management) corporativo.
 
 ---
 
-## 🎯 Objetivo do Projeto
+# 🚀 Stack Tecnológica
 
-Demonstrar na prática:
-- Implementação de autenticação segura
-- Estruturação de autorização por perfis e permissões
-- Separação clara entre camadas da aplicação
-- Arquitetura preparada para escalabilidade
-- Aplicação de conceitos de segurança em APIs
-
----
-
-## 🛠 Stack Tecnológica
-- PHP 8.2+
-- Laravel 10
+- PHP 8.2
+- Laravel 10+
+- JWT Authentication
 - MySQL 8
-- Redis (cache / sessão)
 - Docker
-- JWT (tymon/jwt-auth)
+- Nginx
+- Clean Architecture
+- RBAC (Role-Based Access Control)
 
 ---
 
-## 🧱 Arquitetura do Projeto
+# 🧱 Arquitetura
 
-O projeto segue princípios de Clean Architecture e separação de responsabilidades:
+O projeto segue os princípios da **Clean Architecture**.
 
 app/
-├── Domain/
-├── Application/
-├── Infrastructure/
-├── Interfaces/
+├── Domain/ → Entidades e contratos
+├── Application/ → Casos de uso
+├── Infrastructure/ → Implementações concretas
+├── Interfaces/ → Camada HTTP (Controllers, Requests)
 
-### 📌 Camadas
 
-- **Domain:** Entidades e regras de negócio puras
-- **Application:** Casos de uso e orquestração
-- **Infrastructure:** Banco de dados, providers, integrações
-- **Interfaces:** Controllers, Requests, Middlewares
+## 🎯 Princípios aplicados
+
+- SRP (Single Responsibility Principle)
+- DIP (Dependency Inversion Principle)
+- Separação clara entre regra de negócio e framework
+- Domain não depende de Laravel
+- Application depende apenas de abstrações
 
 ---
 
-## 🔐 Funcionalidades de Segurança
+# 🔐 Segurança Implementada
 
-- Login com JWT
+## Autenticação
+- JWT Token
 - Refresh Token
-- Middleware de autenticação
-- Middleware de autorização por role
-- Proteção contra acesso indevido
-- Validação robusta de requisições
-- Rate limiting
-- Hash de senha com bcrypt/argon2
+- Logout com invalidação
+
+## Autorização
+- RBAC completo
+- Middleware customizado:
+  - role
+  - permission
+
+## Proteções aplicadas
+- Proteção contra User Enumeration
+- Controle de tentativas de login (Anti Brute Force)
+- Auditoria de eventos:
+  - login_success
+  - login_failed
+  - login_blocked
+- Rate limit
 
 ---
 
-## 🛡 Estratégias de Segurança Implementadas
+# 🧠 Fluxo de Login
 
-- Princípio do menor privilégio (Least Privilege)
-- Separação entre autenticação e autorização
-- Tokens com expiração configurável
-- Proteção contra brute force (rate limit)
-- Hash com Argon2
-- Validação centralizada via FormRequest
-- Logs de tentativa de acesso
-
-## 👥 Modelo de Autorização (RBAC)
-
-O sistema implementa:
-
-- Usuários
-- Papéis (Roles)
-- Permissões
-- Relacionamento many-to-many entre usuários e papéis
-- Controle de acesso via middleware
-
-Exemplo:
-
-- ADMIN → acesso total
-- MANAGER → acesso parcial
-- USER → acesso restrito
+1. Validação via FormRequest
+2. Verificação de bloqueio por IP
+3. Busca usuário via repositório
+4. Autenticação via AuthService
+5. Registro de auditoria
+6. Reset de tentativas
 
 ---
 
-## 🚀 Como Executar o Projeto
+# 🐳 Ambiente Dockerizado
 
-### Clonar repositório
+O projeto é totalmente containerizado.
+
+## Containers
+
+- PHP-FPM
+- Nginx
+- MySQL 8
+
+## Subir ambiente
 
 ```bash
-git clone https://github.com/seu-usuario/iam-secure-api-demo.git
-cd iam-secure-api-demo
+docker compose up -d --build
+
+Rodar migrations:
+docker exec -it iam_app php artisan migrate
+
+Acessar:
+
+http://localhost:8000
+📡 Endpoints Principais
+🔐 Login
+POST /api/auth/login
+👤 Dados do usuário
+GET /api/auth/me
+🔄 Refresh
+POST /api/auth/refresh
+🔒 Admin Only
+GET /api/admin-only
+🔑 Permissão específica
+GET /api/users/create-area
+
+📊 Auditoria
+Todos os eventos críticos são persistidos em:
+audit_logs
+
+Campos registrados:
+user_id
+event
+ip
+user_agent
+metadata
+timestamp
+
+🛡 Proteção contra Brute Force
+Máximo 5 tentativas por IP
+Bloqueio temporário
+Log de bloqueio registrado
+
+📈 Evoluções Futuras
+Swagger / OpenAPI
+Testes automatizados
+Redis para cache distribuído
+Healthcheck endpoint
+Multi-tenant IAM
+CI/CD pipeline
+Integração com OAuth2
+
+🎯 Objetivo Arquitetural
+Este projeto demonstra:
+Separação clara de responsabilidades
+Aplicação prática de Clean Architecture
+Segurança aplicada em nível corporativo
+Infraestrutura containerizada
+Base para sistema IAM escalável
