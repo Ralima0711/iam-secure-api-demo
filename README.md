@@ -1,6 +1,6 @@
 # 🔐 IAM Secure API - Arquitetura Segura com Laravel
 
-Projeto demonstrativo de uma API segura com foco em **Identity and Access Management (IAM)**, utilizando Laravel 10 e boas práticas de arquitetura.
+Projeto arquitetural demonstrativo voltado à implementação segura de APIs com foco em IAM **Identity and Access Management (IAM)**, utilizando Laravel 10 e boas práticas de arquitetura.
 
 Este projeto foi desenvolvido com foco em:
 - 🔐 Autenticação segura com JWT
@@ -31,7 +31,7 @@ Demonstrar na prática:
 - MySQL 8
 - Redis (cache / sessão)
 - Docker
-- JWT (tymon/jwt-auth ou Laravel Sanctum)
+- JWT (tymon/jwt-auth)
 
 ---
 
@@ -39,7 +39,7 @@ Demonstrar na prática:
 
 O projeto segue princípios de Clean Architecture e separação de responsabilidades:
 
-src/
+app/
 ├── Domain/
 ├── Application/
 ├── Infrastructure/
@@ -66,6 +66,16 @@ src/
 - Hash de senha com bcrypt/argon2
 
 ---
+
+## 🛡 Estratégias de Segurança Implementadas
+
+- Princípio do menor privilégio (Least Privilege)
+- Separação entre autenticação e autorização
+- Tokens com expiração configurável
+- Proteção contra brute force (rate limit)
+- Hash com Argon2
+- Validação centralizada via FormRequest
+- Logs de tentativa de acesso
 
 ## 👥 Modelo de Autorização (RBAC)
 
