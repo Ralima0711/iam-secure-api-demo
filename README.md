@@ -26,12 +26,11 @@ O projeto segue os princípios da **Clean Architecture**, promovendo separação
 
 ## 📂 Estrutura de Camadas
 
-
 app/
-├── Domain/ → Entidades e contratos (interfaces)
-├── Application/ → Casos de uso (regras de negócio)
-├── Infrastructure/ → Implementações concretas (JWT, DB, Cache)
-├── Interfaces/ → Camada HTTP (Controllers, Requests, Middleware)
+├── Domain/               → Entidades e contratos (interfaces)
+├── Application/          → Casos de uso (regras de negócio)
+├── Infrastructure/       → Implementações concretas (JWT, DB, Cache)
+├── Interfaces/           → Camada HTTP (Controllers, Requests, Middleware)
 
 
 ## 🎯 Princípios Aplicados
@@ -110,8 +109,9 @@ app/
 
 ## 🔐 Login
 
+```http
 POST /api/auth/login
-
+```http
 
 ## 👤 Usuário autenticado
 
@@ -168,13 +168,15 @@ Essa estrutura permite futura integração com SIEM ou monitoramento centralizad
 # 🏗 Diagrama de Camadas
 
 
+```text
 HTTP (Controllers)
-↓
+        ↓
 Application (UseCases)
-↓
+        ↓
 Domain (Contracts / Entities)
-↓
+        ↓
 Infrastructure (JWT, DB, Cache)
+```
 
 
 ---
@@ -193,14 +195,21 @@ O projeto é totalmente containerizado.
 
 ```bash
 docker compose up -d --build
-Rodar migrations
+```
+
+## Rodar migrations
+
+```bash
 docker exec -it iam_app php artisan migrate
-Acessar aplicação
+```
+
+## Acessar aplicação
+
 http://localhost:8000
 
 ##🌎 Considerações para Produção
 
-#Em ambiente real recomenda-se:
+Em ambiente real recomenda-se:
 Redis para cache distribuído
 HTTPS obrigatório
 Rotação de chaves JWT
@@ -211,7 +220,7 @@ Healthcheck endpoint
 Estratégia de backup do banco
 Secrets gerenciados via Vault ou similar
 
-#📈 Evoluções Futuras
+##📈 Evoluções Futuras
 Swagger / OpenAPI
 Testes automatizados
 Multi-tenant IAM
